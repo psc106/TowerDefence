@@ -12,8 +12,6 @@ public class Spawner : MonoBehaviour
 
     private void Start()
     {
-        Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Ignore Raycast"), LayerMask.NameToLayer("Enemy"));
-        Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Ignore Raycast"), LayerMask.NameToLayer("Enemy"));
         currCount = 0;
     }
 
