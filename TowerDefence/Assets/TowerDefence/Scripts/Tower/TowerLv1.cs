@@ -39,7 +39,7 @@ public class TowerLv1 : TowerCommon
                 if (target != null && target != default)
                 {
                     FireReload = 0;
-                    BulletCommon bullet_ = Instantiate(bullet, new Vector3(transform.position.x, .5f, transform.position.z), Quaternion.identity);
+                    BulletCommon bullet_ = Instantiate(bullet, new Vector3(transform.position.x, .15f, transform.position.z), Quaternion.identity);
                     bullet_.transform.LookAt(new Vector3(transform.forward.x, bullet.transform.position.y, transform.forward.z));
                     bullet_.setTargetPosition(transform.forward);
                 }
@@ -80,7 +80,7 @@ public class TowerLv1 : TowerCommon
             //추적 각도
             //추적전 회전속도 radian 
             //추적시 회전속도 speed
-            Debug.Log("angle"+angle);
+            
             if (angle > 30f)
             {
                 if (Quaternion.FromToRotation(transform.forward, direction).eulerAngles.y>180)
@@ -111,10 +111,13 @@ public class TowerLv1 : TowerCommon
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.name.Equals(target.name))
+        if (target != null && target != default)
         {
-            isTargeting = false;
-            target = null;
+            if (other.tag.Equals("Enemy") && other.name.Equals(target.name))
+            {
+                isTargeting = false;
+                target = null;
+            }
         }
         
     }

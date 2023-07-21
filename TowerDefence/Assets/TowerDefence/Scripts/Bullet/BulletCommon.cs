@@ -7,7 +7,7 @@ public class BulletCommon : MonoBehaviour
     protected Rigidbody rb;
     protected Vector3 targetPosition;
 
-    public float power;
+    public int power;
     public float speed;
     public float splashArea;
 
