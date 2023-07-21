@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class TowerCommon : MonoBehaviour
 {
-    public Bullet bullet;
     public float fireRate;
-    public float bulletCount;
+    public int bulletCount;
     public float fireRadius;
 
     protected SphereCollider shootArea;
@@ -16,6 +15,5 @@ public class TowerCommon : MonoBehaviour
     {
         shootArea = GetComponent<SphereCollider>();
         rigidbody = GetComponent<Rigidbody>();
-        bullet = GetComponent<Bullet>();
     }
 }
