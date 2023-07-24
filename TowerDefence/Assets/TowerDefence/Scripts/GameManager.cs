@@ -14,6 +14,10 @@ public class GameManager : MonoBehaviour
     public Spawner spawner;
     public End end;
 
+    public bool isCreateState = false;
+
+    public GameObject nodeUI;
+    public Node[][] nodes;
 
     private void Awake()
     {
@@ -27,15 +31,19 @@ public class GameManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
-        }        
+        }
+
     }
 
     private void Init()
     {
+        nodes = nodeUI.GetComponentInParent<TowerUI>().GetNodes();
         stageLevel = 0;
 
         spawner = FindObjectOfType<Spawner>();
         end = FindObjectOfType<End>();
+
+
     }
 
     public void LevelUpStage()

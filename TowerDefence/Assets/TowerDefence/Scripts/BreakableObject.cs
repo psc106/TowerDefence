@@ -5,34 +5,34 @@ using UnityEngine;
 public class BreakableObject : MonoBehaviour
 {
 
-    Enemy parent;
+    public Enemy enemy;
 
     private void Start()
     {
-        parent = transform.parent.GetComponent<Enemy>();
+        enemy = transform.GetComponent<Enemy>();
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("에너미 콜라이더" + other.tag.ToString());
+       // Debug.Log("에너미 콜라이더" + other.tag.ToString());
         if (other.tag.Equals("Bullet"))
         {
             Destroy(other.gameObject);
             BulletCommon bullet = other.GetComponent<BulletCommon>();
 
-            parent.hp -= bullet.power;
-            if (parent.hp <= 0)
+            enemy.hp -= bullet.power;
+            if (enemy.hp <= 0)
             {
-                Destroy(parent.gameObject);
+                Destroy(enemy.gameObject);
                 GameManager.Instance.spawner.removeCount();
             }
         }
 
-        if (!parent.isReturn)
+        if (!enemy.isReturn)
         {
             if (other.tag.Equals("End"))
             {
-                parent.isReturn = true;
+                enemy.isReturn = true;
             }
         }
 
@@ -40,7 +40,7 @@ public class BreakableObject : MonoBehaviour
         {
             if (other.tag.Equals("Spawner"))
             {
-                parent.isReturn = false;
+                enemy.isReturn = false;
             }
         }
     }

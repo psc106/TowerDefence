@@ -12,6 +12,7 @@ public class Spawner : MonoBehaviour
 
     private void Start()
     {
+        Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Enemy"));
         currCount = 0;
     }
 
@@ -27,7 +28,7 @@ public class Spawner : MonoBehaviour
                 spawnTime = 0;
                 currCount += 1;
 
-                GameObject enemy_ = Instantiate(enemy, transform.position, Quaternion.identity);
+                GameObject enemy_ = Instantiate(enemy, new Vector3(transform.position.x, .5f, transform.position.z), enemy.transform.rotation);
             }
         }        
     }
