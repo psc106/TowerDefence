@@ -126,6 +126,10 @@ public class TowerUI : MonoBehaviour
         TowerCommon towerScript = currCannon.GetComponent<TowerCommon>();
         towerScript.enabled = true;
 
+        towerScript.CloseViewRange();
+        GameManager.Instance.pool.CloseViewRanges();
+        GameManager.Instance.pool.AddTower(towerScript);
+
         currNode.canBuild += 1;
         currNode.isCannon = false;
         towerScript.isActive = true;
@@ -141,14 +145,17 @@ public class TowerUI : MonoBehaviour
     {
         if (!GameManager.Instance.isCreateState)
         {
+            GameManager.Instance.pool.OpenViewRanges();
+
             Time.timeScale = 0.4f;
             Vector3 point = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,
                                 Input.mousePosition.y, Input.mousePosition.z));
             point = new Vector3(point.x, 5f, point.z);
 
-            currCannon = Instantiate(cannonPrefab, point, Quaternion.identity);
+            currCannon = Instantiate(cannonPrefab, point, Quaternion.identity, GameManager.Instance.pool.transform);
 
             TowerCommon towerScript = currCannon.GetComponent<TowerCommon>();
+            towerScript.OpenViewRange();
             towerScript.enabled = false;
 
             GameManager.Instance.isCreateState = true;

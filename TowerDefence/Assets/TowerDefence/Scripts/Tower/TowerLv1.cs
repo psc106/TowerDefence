@@ -13,6 +13,9 @@ public class TowerLv1 : TowerCommon
     private GameObject target =default;
     private float FireReload = default;
 
+
+    private Transform head = default;
+
     protected override void Init()
     {
         base.Init();
@@ -20,6 +23,7 @@ public class TowerLv1 : TowerCommon
         isTargeting = false;
         target = default;
         FireReload = 0;
+        head = transform.Find("Head");
     }
 
     // Start is called before the first frame update
@@ -40,9 +44,9 @@ public class TowerLv1 : TowerCommon
                 if (target != null && target != default)
                 {
                     FireReload = 0;
-                    BulletCommon bullet_ = Instantiate(bullet, new Vector3(transform.position.x, .15f, transform.position.z), Quaternion.identity);
-                    bullet_.transform.LookAt(new Vector3(transform.forward.x, bullet.transform.position.y, transform.forward.z));
-                    bullet_.setTargetPosition(transform.forward);
+                    BulletCommon bullet_ = Instantiate(bullet, new Vector3(transform.position.x, head.position.y-.2f, transform.position.z), Quaternion.identity);
+                    bullet_.transform.LookAt(new Vector3(head.forward.x, head.position.y - .2f, head.forward.z));
+                    bullet_.setTargetPosition(head.forward);
                 }
             }
         }
@@ -76,7 +80,7 @@ public class TowerLv1 : TowerCommon
             //두 벡터의 차(원점, 목표)로 상대 좌표를 구한다는 뜻
             Vector3 direction = (targetPosition - position);
             //목표 각도 구한다.
-            float angle = Vector3.Angle(transform.forward, direction);
+            float angle = Vector3.Angle(head.forward, direction);
 
             //나중에 추가할것
             //추적 각도
@@ -85,19 +89,19 @@ public class TowerLv1 : TowerCommon
             
             if (angle > 30f)
             {
-                if (Quaternion.FromToRotation(transform.forward, direction).eulerAngles.y>180)
+                if (Quaternion.FromToRotation(head.forward, direction).eulerAngles.y>180)
                 {
-                    transform.rotation = Quaternion.Euler(0f, transform.eulerAngles.y - 3f, 0f);
+                    head.rotation = Quaternion.Euler(0f, head.eulerAngles.y - 3f, 0f);
                 }
                 else
                 {
-                    transform.rotation = Quaternion.Euler(0f, transform.eulerAngles.y + 3f, 0f);
+                    head.rotation = Quaternion.Euler(0f, head.eulerAngles.y + 3f, 0f);
                 }
             }
             else
             {
                 //transform.LookAt(target.transform, Vector3.up);
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z)), 10*Time.deltaTime);
+                head.rotation = Quaternion.Slerp(head.rotation, Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z)), 10*Time.deltaTime);
             }
 
 

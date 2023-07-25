@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     public GameObject nodeUI;
     public Node[][] nodes;
 
+    public TowerPool pool;
 
     private void Awake()
     {

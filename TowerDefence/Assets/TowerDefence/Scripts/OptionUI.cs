@@ -21,6 +21,7 @@ public class OptionUI : MonoBehaviour
     [SerializeField]
     private TowerCommon selectCannon;
 
+
     private void Start()
     {
         cannonUI.SetActive(false);
@@ -63,8 +64,18 @@ public class OptionUI : MonoBehaviour
                             enter = true;
                             selectCannon = collider;
                             cannonUI.SetActive(true);
+                            GameManager.Instance.pool.OpenViewRanges();
 
                             cannonUI.transform.position = new Vector3(hit.collider.transform.position.x, transform.position.y, hit.collider.transform.position.z);
+
+                            if (selectCannon.GetDowngrade() == null) 
+                            {
+                                downBtn.gameObject.SetActive(false);
+                            }
+                            else
+                            { 
+                                downBtn.gameObject.SetActive(true);
+                            }
 
                             List<GameObject> list = selectCannon.GetUpgrade();
                             int count = 0;
@@ -96,6 +107,7 @@ public class OptionUI : MonoBehaviour
                 {
                     List<GameObject> list = selectCannon.GetUpgrade();
                     cannonUI.SetActive(false);
+                    GameManager.Instance.pool.CloseViewRanges();
                     if (list != null)
                     {
 
@@ -116,11 +128,21 @@ public class OptionUI : MonoBehaviour
         {
             buttonDown = false;
             Node tmp = selectCannon.node;
+            GameManager.Instance.pool.RemoveTower(selectCannon);
             Destroy(selectCannon.gameObject);
-            upgradeCannon = Instantiate(upgradeCannon, selectCannon.transform.position, selectCannon.transform.rotation);
+            upgradeCannon = Instantiate(upgradeCannon, selectCannon.transform.position, selectCannon.transform.rotation, GameManager.Instance.pool.transform);
             selectCannon = upgradeCannon.GetComponent<TowerCommon>();
             selectCannon.node = tmp;
             selectCannon.isActive = true;
+
+            if (selectCannon.GetDowngrade() == null)
+            {
+                downBtn.gameObject.SetActive(false);
+            }
+            else
+            {
+                downBtn.gameObject.SetActive(true);
+            }
 
             List<GameObject> list = selectCannon.GetUpgrade();
             int count = 0;
@@ -144,15 +166,25 @@ public class OptionUI : MonoBehaviour
     public void DowngradeCannon()
     {
         GameObject downCannon = selectCannon.GetDowngrade();
+
         if (downCannon != null)
         {
             Node tmp = selectCannon.node;
+            GameManager.Instance.pool.RemoveTower(selectCannon);
             Destroy(selectCannon.gameObject);
-            downCannon = Instantiate(downCannon, selectCannon.transform.position, selectCannon.transform.rotation);
+            downCannon = Instantiate(downCannon, selectCannon.transform.position, selectCannon.transform.rotation, GameManager.Instance.pool.transform);
             selectCannon = downCannon.GetComponent<TowerCommon>();
             selectCannon.node = tmp;
             selectCannon.isActive = true;
 
+            if (selectCannon.GetDowngrade() == null)
+            {
+                downBtn.gameObject.SetActive(false);
+            }
+            else
+            {
+                downBtn.gameObject.SetActive(true);
+            }
 
             List<GameObject> list = selectCannon.GetUpgrade();
             int count = 0;
@@ -177,6 +209,7 @@ public class OptionUI : MonoBehaviour
     {
         selectCannon.Sell();
         cannonUI.SetActive(false);
+        GameManager.Instance.pool.OpenViewRanges();
     }
 
 }

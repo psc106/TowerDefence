@@ -8,14 +8,17 @@ public class BulletLv1 : BulletCommon
     protected override void Init()
     {
         base.Init();
-    } 
+    }
 
+    private void Awake()
+    {
+        Init();
+        Destroy(gameObject, 1f);
+
+    }
     // Start is called before the first frame update
     void Start()
     {
-        Init();
-
-        Destroy(gameObject, 5f);
         rb.velocity = new Vector3(targetPosition.x*speed, 0, targetPosition.z*speed);
     }
 
