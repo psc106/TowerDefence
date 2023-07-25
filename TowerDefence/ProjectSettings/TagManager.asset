@@ -11,6 +11,7 @@ TagManager:
   - End
   - Spawner
   - Wall
+  - Cannon
   layers:
   - Default
   - TransparentFX

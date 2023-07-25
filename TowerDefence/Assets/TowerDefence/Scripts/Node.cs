@@ -8,7 +8,7 @@ public class Node : MonoBehaviour
     public int x;
     public int z;
 
-    public bool canBuild;
+    public int canBuild;
     public bool isCannon;
 
     public Sprite noBuild;
@@ -17,7 +17,7 @@ public class Node : MonoBehaviour
 
     private void Start()
     {
-        canBuild = true;
+        canBuild = 0;
         isCannon = false;
     }
     private void Update()
@@ -27,7 +27,7 @@ public class Node : MonoBehaviour
 
     public void SelectNode(bool isSelect)
     {
-        if (!canBuild)
+        if (canBuild!=0)
         {
             gameObject.GetComponent<Image>().sprite = noBuild;
         }

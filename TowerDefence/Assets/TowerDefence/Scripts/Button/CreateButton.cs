@@ -12,16 +12,8 @@ public class CreateButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
         parent = GetComponentInParent<TowerUI>();
     }
 
-
     public void OnPointerDown(PointerEventData eventData)
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit))
-        {
-            
-        }
-
         parent.CreateCannon();
     }
 
@@ -29,4 +21,5 @@ public class CreateButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
     {
         parent.BuildCannon();
     }
+
 }

@@ -14,17 +14,21 @@ public class BreakableObject : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-       // Debug.Log("에너미 콜라이더" + other.tag.ToString());
+        //Debug.Log("에너미 콜라이더" + other.tag.ToString());
         if (other.tag.Equals("Bullet"))
         {
             Destroy(other.gameObject);
             BulletCommon bullet = other.GetComponent<BulletCommon>();
 
             enemy.hp -= bullet.power;
-            if (enemy.hp <= 0)
+            if (enemy.hp < 5)
             {
-                Destroy(enemy.gameObject);
-                GameManager.Instance.spawner.removeCount();
+                enemy.speed *= .3f; 
+                if (enemy.hp <= 0)
+                {
+                    Destroy(enemy.gameObject);
+                    GameManager.Instance.spawner.removeCount();
+                }
             }
         }
 

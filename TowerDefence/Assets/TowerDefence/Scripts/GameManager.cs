@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     public GameObject nodeUI;
     public Node[][] nodes;
 
+
     private void Awake()
     {
         if (Instance == null)
@@ -50,4 +51,6 @@ public class GameManager : MonoBehaviour
     {
         stageLevel += 1;
     }
+
+
 }

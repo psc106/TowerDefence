@@ -80,6 +80,13 @@ MonoBehaviour:
   fireRate: 0.1
   bulletCount: 1
   fireRadius: 2
+  upgradeCannons:
+  - {fileID: 2954576616160112760, guid: 909e0afb1ae50944583256bb6240fda3, type: 3}
+  - {fileID: 2954576616160112760, guid: 99d19e293d48cfb46911bfe2e2b4fec1, type: 3}
+  - {fileID: 2954576616160112760, guid: 9ae06d0d51b7b1c45afc87d381d2e851, type: 3}
+  downgradeCannon: {fileID: 0}
+  isActive: 0
+  node: {fileID: 0}
   bullet: {fileID: -3687140553133766086, guid: 1023c4790eb8dfc41be65a6d71c06a99, type: 3}
 --- !u!1 &2587685208373920313
 GameObject:
@@ -95,7 +102,7 @@ GameObject:
   - component: {fileID: 3952700884941915282}
   m_Layer: 0
   m_Name: Body
-  m_TagString: Untagged
+  m_TagString: Cannon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -176,8 +183,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.0000001, y: 2, z: 1.0000002}
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+  m_Size: {x: 1.0000001, y: 10, z: 1.0000002}
+  m_Center: {x: 0.000000059604645, y: 4, z: -0.00000008940697}
 --- !u!1 &2587685208862378133
 GameObject:
   m_ObjectHideFlags: 0

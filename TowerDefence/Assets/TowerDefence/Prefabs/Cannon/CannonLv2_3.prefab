@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 2954576616160112766}
   - component: {fileID: 2954576616160112767}
   m_Layer: 0
-  m_Name: CannonLv2_1
+  m_Name: CannonLv2_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -167,7 +167,7 @@ MonoBehaviour:
   downgradeCannon: {fileID: 2587685208080037074, guid: 6f631a41484f4074da4377d3b74202e6, type: 3}
   isActive: 0
   node: {fileID: 0}
-  bullet: {fileID: 7641046234907643594, guid: 5e579689b45017f4ba66fe99cdfdc54e, type: 3}
+  bullet: {fileID: 7641046234907643594, guid: 81472425fd464b845b24a3eb5d2baf22, type: 3}
 --- !u!1 &2954576616940603027
 GameObject:
   m_ObjectHideFlags: 0

@@ -29,7 +29,7 @@ public class Enemy : MonoBehaviour
     {
        
 
-        speed = 4;
+        speed = 40;
 
         warningArea = new bool[4];
         for (int i = 0; i < warningArea.Length; i++) { warningArea[i] = false; }
@@ -235,11 +235,11 @@ public class Enemy : MonoBehaviour
         while (true)
         {
             cnt += 1;
-            transform.position = Vector3.Lerp(start, end, cnt/40);
+            transform.position = Vector3.Lerp(start, end, cnt/speed);
 
             yield return new WaitForEndOfFrame();
 
-            if (cnt > 40) break;
+            if (cnt > speed) break;
         }
 
         isMove = false;
