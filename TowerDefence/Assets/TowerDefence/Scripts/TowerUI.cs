@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -126,8 +125,6 @@ public class TowerUI : MonoBehaviour
         TowerCommon towerScript = currCannon.GetComponent<TowerCommon>();
         towerScript.enabled = true;
 
-        towerScript.CloseViewRange();
-        GameManager.Instance.pool.CloseViewRanges();
         GameManager.Instance.pool.AddTower(towerScript);
 
         currNode.canBuild += 1;
@@ -139,6 +136,7 @@ public class TowerUI : MonoBehaviour
         Time.timeScale = 1f;
         GameManager.Instance.isCreateState = false;
         imageUI.SetActive(false);
+        GameManager.Instance.pool.CloseViewRanges();
     }
 
     public void CreateCannon()

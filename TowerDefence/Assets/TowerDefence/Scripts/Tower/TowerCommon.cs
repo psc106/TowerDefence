@@ -28,7 +28,7 @@ public class TowerCommon : MonoBehaviour
 
         shootArea.radius = fireRadius;
         Circle.localScale = new Vector3(fireRadius*2, fireRadius*2, 0);
-        OpenViewRange();
+        CloseViewRange();
     }
 
     public void OpenViewRange()
@@ -53,7 +53,6 @@ public class TowerCommon : MonoBehaviour
 
     public void Sell()
     {
-        CloseViewRange();
         node.SetBuildPossible(false);
         node.canBuild -= 1;
         node.isCannon = false;
@@ -63,7 +62,6 @@ public class TowerCommon : MonoBehaviour
 
     public void Upgrade()
     {
-        CloseViewRange();
         if (upgradeCannons != null && upgradeCannons.Count > 0)
         {
             for (int i = 0; i < upgradeCannons.Count; i++)

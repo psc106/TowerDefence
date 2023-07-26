@@ -5,7 +5,6 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
 
 public class OptionUI : MonoBehaviour
 {
@@ -132,6 +131,7 @@ public class OptionUI : MonoBehaviour
             Destroy(selectCannon.gameObject);
             upgradeCannon = Instantiate(upgradeCannon, selectCannon.transform.position, selectCannon.transform.rotation, GameManager.Instance.pool.transform);
             selectCannon = upgradeCannon.GetComponent<TowerCommon>();
+            GameManager.Instance.pool.AddTower(selectCannon);
             selectCannon.node = tmp;
             selectCannon.isActive = true;
 
@@ -174,6 +174,7 @@ public class OptionUI : MonoBehaviour
             Destroy(selectCannon.gameObject);
             downCannon = Instantiate(downCannon, selectCannon.transform.position, selectCannon.transform.rotation, GameManager.Instance.pool.transform);
             selectCannon = downCannon.GetComponent<TowerCommon>();
+            GameManager.Instance.pool.AddTower(selectCannon);
             selectCannon.node = tmp;
             selectCannon.isActive = true;
 
@@ -209,7 +210,7 @@ public class OptionUI : MonoBehaviour
     {
         selectCannon.Sell();
         cannonUI.SetActive(false);
-        GameManager.Instance.pool.OpenViewRanges();
+        GameManager.Instance.pool.CloseViewRanges();
     }
 
 }
