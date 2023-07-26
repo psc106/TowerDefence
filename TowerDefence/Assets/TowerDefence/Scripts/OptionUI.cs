@@ -42,53 +42,76 @@ public class OptionUI : MonoBehaviour
         {
             cannonUI.SetActive(false);
         }
-
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        ray.direction = Vector3.down;
-        RaycastHit hit;
-
-        if (Input.GetMouseButtonDown(0))
+        else
         {
-            if (!buttonDown)
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            ray.direction = Vector3.down;
+            RaycastHit hit;
+
+            if (Input.GetMouseButtonDown(0))
             {
-                enter = false;
-                if (Physics.Raycast(ray, out hit))
+                if (!buttonDown)
                 {
-                    if (hit.collider.tag.Equals("Cannon"))
+                    enter = false;
+                    if (Physics.Raycast(ray, out hit))
                     {
-                        TowerCommon collider = hit.collider.transform.GetComponentInParent<TowerCommon>();
-
-                        if (collider.isActive)
+                        if (hit.collider.tag.Equals("Cannon"))
                         {
-                            enter = true;
-                            selectCannon = collider;
-                            cannonUI.SetActive(true);
-                            GameManager.Instance.pool.OpenViewRanges();
+                            TowerCommon collider = hit.collider.transform.GetComponentInParent<TowerCommon>();
 
-                            cannonUI.transform.position = new Vector3(hit.collider.transform.position.x, transform.position.y, hit.collider.transform.position.z);
-
-                            if (selectCannon.GetDowngrade() == null) 
+                            if (collider.isActive)
                             {
-                                downBtn.gameObject.SetActive(false);
-                            }
-                            else
-                            { 
-                                downBtn.gameObject.SetActive(true);
-                            }
+                                enter = true;
+                                selectCannon = collider;
+                                cannonUI.SetActive(true);
+                                GameManager.Instance.pool.OpenViewRanges();
 
-                            List<GameObject> list = selectCannon.GetUpgrade();
-                            int count = 0;
-                            if (list != null)
-                            {
-                                count+=list.Count;
+                                cannonUI.transform.position = new Vector3(hit.collider.transform.position.x, transform.position.y, hit.collider.transform.position.z);
 
-                                for (int i = 0; i < list.Count; i++)
+                                if (selectCannon.GetDowngrade() == null)
                                 {
-                                    upgradeBtns[i].GetComponent<UpgradeButton>().upCannon = list[i];
-                                    upgradeBtns[i].gameObject.SetActive(true);
+                                    downBtn.gameObject.SetActive(false);
+                                }
+                                else
+                                {
+                                    downBtn.gameObject.SetActive(true);
+                                }
+
+                                List<GameObject> list = selectCannon.GetUpgrade();
+                                int count = 0;
+                                if (list != null)
+                                {
+                                    count += list.Count;
+
+                                    for (int i = 0; i < list.Count; i++)
+                                    {
+                                        upgradeBtns[i].GetComponent<UpgradeButton>().upCannon = list[i];
+                                        upgradeBtns[i].gameObject.SetActive(true);
+                                    }
+                                }
+                                for (int i = count; i < 3; i++)
+                                {
+                                    upgradeBtns[i].gameObject.SetActive(false);
                                 }
                             }
-                            for (int i = count; i < 3 ; i++)
+                        }
+                    }
+                }
+            }
+
+            if (Input.GetMouseButtonUp(0))
+            {
+                if (!buttonDown && !enter)
+                {
+                    if (selectCannon != null)
+                    {
+                        List<GameObject> list = selectCannon.GetUpgrade();
+                        cannonUI.SetActive(false);
+                        GameManager.Instance.pool.CloseViewRanges();
+                        if (list != null)
+                        {
+
+                            for (int i = 0; i < list.Count; i++)
                             {
                                 upgradeBtns[i].gameObject.SetActive(false);
                             }
@@ -97,28 +120,6 @@ public class OptionUI : MonoBehaviour
                 }
             }
         }
-
-        if (Input.GetMouseButtonUp(0))
-        {
-            if(!buttonDown && !enter)
-            {
-                if (selectCannon != null)
-                {
-                    List<GameObject> list = selectCannon.GetUpgrade();
-                    cannonUI.SetActive(false);
-                    GameManager.Instance.pool.CloseViewRanges();
-                    if (list != null)
-                    {
-
-                        for (int i = 0; i < list.Count; i++)
-                        {
-                            upgradeBtns[i].gameObject.SetActive(false);
-                        }
-                    }
-                }
-            }
-        }
-        
     }
 
     public void UpgradeCannon(GameObject upgradeCannon)
@@ -134,6 +135,7 @@ public class OptionUI : MonoBehaviour
             GameManager.Instance.pool.AddTower(selectCannon);
             selectCannon.node = tmp;
             selectCannon.isActive = true;
+            selectCannon.OpenViewRange();
 
             if (selectCannon.GetDowngrade() == null)
             {
@@ -169,6 +171,7 @@ public class OptionUI : MonoBehaviour
 
         if (downCannon != null)
         {
+            buttonDown = false;
             Node tmp = selectCannon.node;
             GameManager.Instance.pool.RemoveTower(selectCannon);
             Destroy(selectCannon.gameObject);
@@ -177,6 +180,7 @@ public class OptionUI : MonoBehaviour
             GameManager.Instance.pool.AddTower(selectCannon);
             selectCannon.node = tmp;
             selectCannon.isActive = true;
+            selectCannon.OpenViewRange();
 
             if (selectCannon.GetDowngrade() == null)
             {
@@ -208,6 +212,7 @@ public class OptionUI : MonoBehaviour
 
     public void SellCannon()
     {
+        GameManager.Instance.pool.RemoveTower(selectCannon);
         selectCannon.Sell();
         cannonUI.SetActive(false);
         GameManager.Instance.pool.CloseViewRanges();

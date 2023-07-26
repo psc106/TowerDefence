@@ -10,7 +10,7 @@ public class TowerCommon : MonoBehaviour
 
     protected SphereCollider shootArea;
     protected Rigidbody rigidbody;
-    public Transform Circle;
+    public GameObject Circle;
 
     public List<GameObject> upgradeCannons;
     public GameObject downgradeCannon;
@@ -27,17 +27,16 @@ public class TowerCommon : MonoBehaviour
         //Circle = transform.Find("Circle");
 
         shootArea.radius = fireRadius;
-        Circle.localScale = new Vector3(fireRadius*2, fireRadius*2, 0);
-        CloseViewRange();
+        Circle.transform.localScale = new Vector3(fireRadius*2, fireRadius*2, 0);
     }
 
     public void OpenViewRange()
     {
-        Circle.gameObject.SetActive(true);
+        Circle.SetActive(true);
     }
     public void CloseViewRange()
     {
-        Circle.gameObject.SetActive(false);
+        Circle.SetActive(false);
     }
 
     public List<GameObject> GetUpgrade()
@@ -57,6 +56,7 @@ public class TowerCommon : MonoBehaviour
         node.canBuild -= 1;
         node.isCannon = false;
         node.SelectNode(false);
+
         Destroy(gameObject);
     }
 

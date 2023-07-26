@@ -60,6 +60,8 @@ public class TowerUI : MonoBehaviour
 
             if (Input.GetMouseButtonDown(1))
             {
+                GameManager.Instance.pool.CloseViewRanges();
+
                 imageUI.SetActive(false);
                 Destroy(currCannon);
                 Time.timeScale = 1f;

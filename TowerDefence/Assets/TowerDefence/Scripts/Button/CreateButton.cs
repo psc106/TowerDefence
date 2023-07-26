@@ -14,12 +14,18 @@ public class CreateButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        parent.CreateCannon();
+        if (!GameManager.Instance.isCreateState)
+        {
+            parent.CreateCannon();
+        }
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        parent.BuildCannon();
+        if (GameManager.Instance.isCreateState)
+        {
+            parent.BuildCannon();
+        }
     }
 
 }
